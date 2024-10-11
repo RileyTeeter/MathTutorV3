@@ -1,6 +1,16 @@
 //
 // Created by riwall01 on 10/11/2024.
 //
+/**************************************************************************************
+Program: Math Tutor Version 1
+Programmer: Riley Teeter
+Date: 8.26.24
+replit URL:
+https://replit.com/@riteet01/MathTutorAssignment#Programming%20Fundamentals/main.cpp
+Description: A simple math tutor for young children. In version 1 it displays
+the title of the program, a math joke,  it gets the users name, asks a math
+question, and the display end of program message.
+**************************************************************************************/
 
 #include <iostream> // required for couts & cins
 #include <cstdlib> // allows for randomizer

@@ -1,21 +1,20 @@
-//
-// Created by riwall01 on 10/11/2024.
-//
+
 /**************************************************************************************
-Program: Math Tutor Version 1
-Programmer: Riley Teeter
+Program: Math Tutor Version 3
+Programmers: Riley Teeter & River Wallerstedt
 Date: 8.26.24
-replit URL:
-https://replit.com/@riteet01/MathTutorAssignment#Programming%20Fundamentals/main.cpp
-Description: A simple math tutor for young children. In version 1 it displays
-the title of the program, a math joke,  it gets the users name, asks a math
-question, and the display end of program message.
+Github URL: https://github.com/RileyTeeter/MathTutorV3
+Description: A simple math tutor for elementary students. Version 3 gets the user's name
+and asks the user to answer a randomized math question. This version will repeat the question
+after a wrong attempt and will generate a new question if the answer is correct. This version
+will also level up or down depending on how many questions the user correctly answers/
 **************************************************************************************/
 
 #include <iostream> // required for couts & cins
 #include <cstdlib> // allows for randomizer
 #include <ctime> // enables use of time function
 #include <string> // allows for strings to be used
+#include <limits> // required for numeric limits
 
 using namespace std; // sets standard namespace
 
@@ -28,12 +27,153 @@ int main() {
     string userName = "unknown"; // Declaring and initializing variables
     int leftNum = 0;
     int rightNum = 0;
-    int mType = 0;
-    char mSymbol = '?';
+    int mathType = 0;
+    char mathSymbol = '?';
     int correctAnswer = 0;
     int userAnswer = 0;
     int temp = 0;
     char userYN = '?';
 
     srand(time(0)); // Generates a unique seed so its random.
+
+    //*********************************************************************
+
+    // Set of cout statements to display the Silly Math ASCII art and welcome banner
+    cout << "*******************************************" << endl;
+    cout << " _____ _ _ _      ___  ___      _   _    " << endl;
+    cout << "/  ___(_| | |     |  /// |     | | | |   " << endl;
+    cout << "| `--. _| | |_   _| .  . | __ _| |_| |__ " << endl;
+    cout << " `--. | | | | | | | |//| |/ _` | __| '_ | " << endl;
+    cout << " ___/ | | | | |_| | |  | | (_| | |_| | | |" << endl;
+    cout << "/____/|_|_|_|__, /|_|  |_/,__,_|,__|_| |_|" << endl;
+    cout << "            __/ /                       " << endl;
+    cout << "           |___/                       " << endl;
+    cout << "*******************************************" << endl;
+    cout << "*    Welcome to Silly Math Tutor V2 by    *" << endl;
+    cout << "*    RivJams and Anneliese Kleinschmit    *" << endl;
+    cout << "*******************************************" << endl;
+    cout << endl;
+
+    // Asks prompt whether to display the jokes or not
+    cout << "Do you wanna hear some math puns? (y/n): ";
+    cin >> userYN;
+
+    if (userYN == 'y') {
+        //response to 'y' as input
+        cout << "Great! Here they are:" << endl;
+    } else {
+        cout << "That's too bad." << endl;
+        cout << "You're gonna hear them anyway!" << endl;
+    }
+    cout << endl;
+
+    // Couts to display jokes. After user input, jokes appear. Maybe add functionality later to reveal answers to jokes after pressing enter.
+    cout << "*******************************************" << endl;
+    cout << endl;
+    cout << "Question: Do you think monsters are good at math?" << endl;
+    cout << "Answer: No, unless you Count Dracula." << endl;
+    cout << endl;
+    cout << "Question: Which knight created the round table?" << endl;
+    cout << "Answer: Sir Cumference." << endl;
+    cout << endl;
+    cout << "Question: What do you call a number who can't stay in place?" << endl;
+    cout << "Answer: A roamin' numeral." << endl;
+    cout << endl;
+    cout << "*******************************************" << endl;
+    cout << endl;
+
+    //*********************************************************************
+
+    // Beginning the interactive portion of the program
+    cout << "Please enter your name to begin: ";
+    getline(cin, userName); // Clears out leftover carriage return
+    getline(cin, userName); // Get user input for name
+    cout << endl;
+
+    // Puts the user's name into the welcome message
+    cout << "Welcome " << userName << ", to the Silly Math Tutor!" << endl;
+    cout << endl;
+
+    //enum mathType {ADD, SUB, MUL, DIV};
+
+
+    //Portion of code dedicated to random number generation
+    leftNum = (rand() % 10) + 1; //randomizes first number
+    rightNum = (rand() % 10) + 1; //randomizes second number
+    mathType = (rand() % 4) + 1; //randomizes math symbol
+
+    switch (mathType) {
+        // assigns math symbol
+        case 1:
+            mathSymbol = '+'; //assigns an addition problem
+            correctAnswer = leftNum + rightNum; // adds the numbers and stores correct answer
+            break;
+
+        case 2:
+            mathSymbol = '-'; //assigns a subtraction problem
+        // This is used to make sure the left number is larger than the right, preventing negative numbers.
+            if (leftNum < rightNum) {
+                temp = leftNum;
+                leftNum = rightNum;
+                rightNum = temp;
+            }
+            correctAnswer = leftNum - rightNum;
+            break;
+
+        case 3:
+            mathSymbol = '*'; //assigns a multiplication problem
+            correctAnswer = leftNum * rightNum;
+            break;
+
+        case 4:
+            mathSymbol = '/'; //assigns a division problem
+        // Following code makes sure division problem doesn't generate a fraction
+            correctAnswer = leftNum;
+            leftNum *= rightNum;
+            break;
+
+        default: // This is here to catch any errors
+            cout << "Invalid question type: " << mathType << endl;
+            cout << "Contact RivJams or AnnelieseKleinschmit about the error" << endl;
+            return -1;
+    }
+
+    //*********************************************************************
+
+
+    //Asks the math question generated from our random number generator
+    cout << userName << ", can you solve this problem?" << endl;
+    cout << leftNum << " " << mathSymbol << " " << rightNum << " = "; // Displays the math problem
+
+    // Loop until the user enters numeric data "From the assignment document"
+    while (!(cin >> userAnswer)) {
+        cin.clear(); // clear the cin error flag
+        cin.ignore(numeric_limits<streamsize>::max() ,
+                '\n'); // ignore the max input, up to 'n'
+        cout << "\tInvalid input!" << endl;
+        cout << "\tPlease enter a number: ";
+    } // end of get userAnswer while loop
+
+    cout << endl; // extra space in between the answer and the confirmation message
+
+    // Tests to see if user answer is correct
+    if (userAnswer == correctAnswer) {
+        cout << "Correct!" << endl;
+        cout << "You're a real Math Whizz!" << endl;
+    } else {
+        cout << "Oops!" << endl;
+        cout << "Looks like someone needs to study." << endl; // The AI suggested to put "You're not a real Math Whizz!"
+        cout << "The correct answer was " << correctAnswer << "." << endl; //gives the user the right answer
+    }
+
+    // End of program. Leave message to user. Couts break up the end message to display better in console.
+    cout << endl;
+    cout << "Thank you, " << userName << ", for playing Silly Math Tutor!" << endl;
+    cout << endl;
+    cout << "Be sure to come back in the near future" << endl;
+    cout << "for more updates, and most importantly," << endl; // promises future improvements, the next being Version 3
+    cout << "MORE FUN!" << endl;
+
+    return 0;
+
 }

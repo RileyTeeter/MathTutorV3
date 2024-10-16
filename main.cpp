@@ -7,7 +7,7 @@ Github URL: https://github.com/RileyTeeter/MathTutorV3
 Description: A simple math tutor for elementary students. Version 3 gets the user's name
 and asks the user to answer a randomized math question. This version will repeat the question
 after a wrong attempt and will generate a new question if the answer is correct. This version
-will also level up or down depending on how many questions the user correctly answers/
+will also level up or down depending on how many questions the user correctly answers
 **************************************************************************************/
 
 #include <iostream> // required for couts & cins
@@ -136,7 +136,8 @@ int main() {
 
         default: // This is here to catch any errors
             cout << "Invalid question type: " << mathType << endl;
-            cout << "Contact RivJams or AnnelieseKleinschmit about the error" << endl;
+            cout << "Contact RivJams or RileyTeeter about the error" << endl;
+            cout << "Program ended with a -1 error" << endl;
             return -1;
     }
 

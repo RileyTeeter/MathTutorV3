@@ -28,11 +28,11 @@ int main() {
     int leftNum = 0;
     int rightNum = 0;
     int mathType = 0;
-    char mathSymbol = '?';
     int correctAnswer = 0;
     int userAnswer = 0;
     int temp = 0;
     char userYN = '?';
+    char mathSymbol = '?';
 
     srand(time(0)); // Generates a unique seed so its random.
 
@@ -82,8 +82,6 @@ int main() {
     cout << "*******************************************" << endl;
     cout << endl;
 
-    //*********************************************************************
-
     // Beginning the interactive portion of the program
     cout << "Please enter your name to begin: ";
     getline(cin, userName); // Clears out leftover carriage return
@@ -94,22 +92,26 @@ int main() {
     cout << "Welcome " << userName << ", to the Silly Math Tutor!" << endl;
     cout << endl;
 
-    //enum mathType {ADD, SUB, MUL, DIV};
-
+    //*********************************************************************
 
     //Portion of code dedicated to random number generation
     leftNum = (rand() % 10) + 1; //randomizes first number
     rightNum = (rand() % 10) + 1; //randomizes second number
-    mathType = (rand() % 4) + 1; //randomizes math symbol
 
-    switch (mathType) {
+    //enum to replace the mathType integer
+    enum mthType {MT_ADD, MT_SUB, MT_MUL, MT_DIV};
+    mthType questionType;
+
+    questionType = static_cast<mthType>(rand() % 4 + 1);
+
+    switch (questionType) {
         // assigns math symbol
-        case 1:
+        case MT_ADD:
             mathSymbol = '+'; //assigns an addition problem
             correctAnswer = leftNum + rightNum; // adds the numbers and stores correct answer
             break;
 
-        case 2:
+        case MT_SUB:
             mathSymbol = '-'; //assigns a subtraction problem
         // This is used to make sure the left number is larger than the right, preventing negative numbers.
             if (leftNum < rightNum) {
@@ -120,12 +122,12 @@ int main() {
             correctAnswer = leftNum - rightNum;
             break;
 
-        case 3:
+        case MT_MUL:
             mathSymbol = '*'; //assigns a multiplication problem
             correctAnswer = leftNum * rightNum;
             break;
 
-        case 4:
+        case MT_DIV:
             mathSymbol = '/'; //assigns a division problem
         // Following code makes sure division problem doesn't generate a fraction
             correctAnswer = leftNum;

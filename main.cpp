@@ -15,6 +15,7 @@ will also level up or down depending on how many questions the user correctly an
 #include <ctime> // enables use of time function
 #include <string> // allows for strings to be used
 #include <limits> // required for numeric limits
+#include <cctype>
 
 using namespace std; // sets standard namespace
 
@@ -31,7 +32,7 @@ int main() {
     int correctAnswer = 0;
     int userAnswer = 0;
     int temp = 0;
-    char userYN = '?';
+    string userYN = "?";
     char mathSymbol = '?';
 
     srand(time(0)); // Generates a unique seed so its random.
@@ -93,27 +94,27 @@ int main() {
     cout << endl;
 
     //*********************************************************************
+    do {
+        //Portion of code dedicated to random number generation
+        leftNum = (rand() % 10) + 1; //randomizes first number
+        rightNum = (rand() % 10) + 1; //randomizes second number
 
-    //Portion of code dedicated to random number generation
-    leftNum = (rand() % 10) + 1; //randomizes first number
-    rightNum = (rand() % 10) + 1; //randomizes second number
+        //enum to replace the mathType integer
+        enum mthType {MT_ADD, MT_SUB, MT_MUL, MT_DIV};
+        mthType questionType;
 
-    //enum to replace the mathType integer
-    enum mthType {MT_ADD, MT_SUB, MT_MUL, MT_DIV};
-    mthType questionType;
+        questionType = static_cast<mthType>(rand() % 4 + 1);
 
-    questionType = static_cast<mthType>(rand() % 4 + 1);
-
-    switch (questionType) {
-        // assigns math symbol
-        case MT_ADD:
-            mathSymbol = '+'; //assigns an addition problem
+        switch (questionType) {
+            // assigns math symbol
+            case MT_ADD:
+                mathSymbol = '+'; //assigns an addition problem
             correctAnswer = leftNum + rightNum; // adds the numbers and stores correct answer
             break;
 
-        case MT_SUB:
-            mathSymbol = '-'; //assigns a subtraction problem
-        // This is used to make sure the left number is larger than the right, preventing negative numbers.
+            case MT_SUB:
+                mathSymbol = '-'; //assigns a subtraction problem
+            // This is used to make sure the left number is larger than the right, preventing negative numbers.
             if (leftNum < rightNum) {
                 temp = leftNum;
                 leftNum = rightNum;
@@ -122,52 +123,76 @@ int main() {
             correctAnswer = leftNum - rightNum;
             break;
 
-        case MT_MUL:
-            mathSymbol = '*'; //assigns a multiplication problem
+            case MT_MUL:
+                mathSymbol = '*'; //assigns a multiplication problem
             correctAnswer = leftNum * rightNum;
             break;
 
-        case MT_DIV:
-            mathSymbol = '/'; //assigns a division problem
-        // Following code makes sure division problem doesn't generate a fraction
+            case MT_DIV:
+                mathSymbol = '/'; //assigns a division problem
+            // Following code makes sure division problem doesn't generate a fraction
             correctAnswer = leftNum;
             leftNum *= rightNum;
             break;
 
-        default: // This is here to catch any errors
-            cout << "Invalid question type: " << mathType << endl;
+            default: // This is here to catch any errors
+                cout << "Invalid question type: " << mathType << endl;
             cout << "Contact RivJams or RileyTeeter about the error" << endl;
             cout << "Program ended with a -1 error" << endl;
             return -1;
-    }
+        }
 
-    //*********************************************************************
+        //*********************************************************************
 
 
-    //Asks the math question generated from our random number generator
-    cout << userName << ", can you solve this problem?" << endl;
-    cout << leftNum << " " << mathSymbol << " " << rightNum << " = "; // Displays the math problem
+        //Asks the math question generated from our random number generator
+        cout << userName << ", can you solve this problem?" << endl;
+        cout << leftNum << " " << mathSymbol << " " << rightNum << " = "; // Displays the math problem
 
-    // Loop until the user enters numeric data "From the assignment document"
-    while (!(cin >> userAnswer)) {
-        cin.clear(); // clear the cin error flag
-        cin.ignore(numeric_limits<streamsize>::max() ,
-                '\n'); // ignore the max input, up to 'n'
-        cout << "\tInvalid input!" << endl;
-        cout << "\tPlease enter a number: ";
-    } // end of get userAnswer while loop
+        // Loop until the user enters numeric data "From the assignment document"
+        while (!(cin >> userAnswer)) {
+            cin.clear(); // clear the cin error flag
+            cin.ignore(numeric_limits<streamsize>::max() ,
+                    '\n'); // ignore the max input, up to 'n'
+            cout << "\tInvalid input!" << endl;
+            cout << "\tPlease enter a number: ";
+        } // end of get userAnswer while loop
 
-    cout << endl; // extra space in between the answer and the confirmation message
+        cout << endl; // extra space in between the answer and the confirmation message
 
-    // Tests to see if user answer is correct
-    if (userAnswer == correctAnswer) {
-        cout << "Correct!" << endl;
-        cout << "You're a real Math Whizz!" << endl;
-    } else {
-        cout << "Oops!" << endl;
-        cout << "Looks like someone needs to study." << endl; // The AI suggested to put "You're not a real Math Whizz!"
-        cout << "The correct answer was " << correctAnswer << "." << endl; //gives the user the right answer
-    }
+        // Tests to see if user answer is correct
+        if (userAnswer == correctAnswer) {
+            cout << "Correct!" << endl;
+            cout << "You're a real Math Whizz!" << endl;
+        } else {
+            cout << "Oops!" << endl;
+            cout << "Looks like someone needs to study." << endl; // The AI suggested to put "You're not a real Math Whizz!"
+            cout << "The correct answer was " << correctAnswer << "." << endl; //gives the user the right answer
+        }
+
+        getline(cin, userYN);
+
+        while (true) {
+            cout << "Do you want to continue (y = yes | n = no)?";
+            getline(cin, userYN);
+
+            //to lower case the users input
+            for (int i = 0; i < userYN.size(); i++) {
+                userYN.at(i) = tolower(userYN.at(i));
+            }
+            if (userYN == "y" || userYN == "yes" || userYN == "no" || userYN == "n") {
+                break;
+            }else {
+                cout << "Invalid input, please try again..." << endl;
+                cout << endl;
+            } //end of if (y,yes, n, no)
+            }// end of inner while loop to validate yes, no
+
+
+
+        }
+
+    } while (userYN == 'y');
 
     // End of program. Leave message to user. Couts break up the end message to display better in console.
     cout << endl;

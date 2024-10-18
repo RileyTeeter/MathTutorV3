@@ -34,6 +34,12 @@ int main() {
     int temp = 0;
     string userYN = "?";
     char mathSymbol = '?';
+    const MAX_ATTEMPTS = 3;
+    const LEVEL_RANGE_CHANGE = 10;
+    int totalCorrect = 0;
+    int totalIncorrect = 0;
+    int mathLevel = 1;
+    int currentRange = LEVEL_RANGE_CHANGE;
 
     srand(time(0)); // Generates a unique seed so its random.
 
@@ -51,7 +57,7 @@ int main() {
     cout << "           |___/                       " << endl;
     cout << "*******************************************" << endl;
     cout << "*    Welcome to Silly Math Tutor V2 by    *" << endl;
-    cout << "*    RivJams and Anneliese Kleinschmit    *" << endl;
+    cout << "*         RivJams and RileyTeeter         *" << endl;
     cout << "*******************************************" << endl;
     cout << endl;
 
@@ -59,7 +65,7 @@ int main() {
     cout << "Do you wanna hear some math puns? (y/n): ";
     cin >> userYN;
 
-    if (userYN == 'y') {
+    if (userYN == "y") {
         //response to 'y' as input
         cout << "Great! Here they are:" << endl;
     } else {
@@ -95,15 +101,16 @@ int main() {
 
     //*********************************************************************
     do {
+
         //Portion of code dedicated to random number generation
-        leftNum = (rand() % 10) + 1; //randomizes first number
-        rightNum = (rand() % 10) + 1; //randomizes second number
+        leftNum = (rand() % currentRange) + 1; //randomizes first number
+        rightNum = (rand() % currentRange) + 1; //randomizes second number
 
         //enum to replace the mathType integer
         enum mthType {MT_ADD, MT_SUB, MT_MUL, MT_DIV};
         mthType questionType;
 
-        questionType = static_cast<mthType>(rand() % 4 + 1);
+        questionType = static_cast<mthType>(rand() % 4);
 
         switch (questionType) {
             // assigns math symbol
@@ -144,10 +151,10 @@ int main() {
 
         //*********************************************************************
 
-
-        //Asks the math question generated from our random number generator
-        cout << userName << ", can you solve this problem?" << endl;
-        cout << leftNum << " " << mathSymbol << " " << rightNum << " = "; // Displays the math problem
+        for (int i =1; i <= MAX_ATTEMPTS; i++) {
+            cout << "[Level #" << mathLevel << "] " << userName << ", what does "
+            << leftNum << " " << mathSymbol << " " << rightNum << " = ";
+        }
 
         // Loop until the user enters numeric data "From the assignment document"
         while (!(cin >> userAnswer)) {
@@ -162,9 +169,18 @@ int main() {
 
         // Tests to see if user answer is correct
         if (userAnswer == correctAnswer) {
+            totalCorrect++;
             cout << "Correct!" << endl;
             cout << "You're a real Math Whizz!" << endl;
+            break;
         } else {
+            if (totalIncorrect == MAX_ATTEMPTS) {
+                cout << "The correct answer was " << correctAnswer << "." << endl; //gives the user the right answer
+                totalIncorrect++;
+            }
+            else {
+                cout << "That was incorrect. You have " << MAX_ATTEMPTS-totalIncorrect << " attempts." << endl;
+            }
             cout << "Oops!" << endl;
             cout << "Looks like someone needs to study." << endl; // The AI suggested to put "You're not a real Math Whizz!"
             cout << "The correct answer was " << correctAnswer << "." << endl; //gives the user the right answer
@@ -180,19 +196,18 @@ int main() {
             for (int i = 0; i < userYN.size(); i++) {
                 userYN.at(i) = tolower(userYN.at(i));
             }
-            if (userYN == "y" || userYN == "yes" || userYN == "no" || userYN == "n") {
+            if (userYN == "y" || userYN == "yes" || userYN == "ny"
+                                                              "o" || userYN == "n") {
                 break;
             }else {
                 cout << "Invalid input, please try again..." << endl;
                 cout << endl;
-            } //end of if (y,yes, n, no)
-            }// end of inner while loop to validate yes, no
+            } //end of if (y, yes, n, no)
+        }// end of inner while loop to validate yes, no
 
+    }
 
-
-        }
-
-    } while (userYN == 'y');
+    while (userYN == "y" || userYN == "yes");
 
     // End of program. Leave message to user. Couts break up the end message to display better in console.
     cout << endl;

@@ -2,7 +2,7 @@
 /**************************************************************************************
 Program: Math Tutor Version 3
 Programmers: Riley Teeter & River Wallerstedt
-Date: 8.26.24
+Date: 10/21/24 *Last updated version
 Github URL: https://github.com/RileyTeeter/MathTutorV3
 Description: A simple math tutor for elementary students. Version 3 gets the user's name
 and asks the user to answer a randomized math question. This version will repeat the question
@@ -56,7 +56,7 @@ int main() {
     cout << "            __/ /                       " << endl;
     cout << "           |___/                       " << endl;
     cout << "*******************************************" << endl;
-    cout << "*    Welcome to Silly Math Tutor V2 by    *" << endl;
+    cout << "*    Welcome to Silly Math Tutor V3 by    *" << endl;
     cout << "*         RivJams and RileyTeeter         *" << endl;
     cout << "*******************************************" << endl;
     cout << endl;
@@ -173,8 +173,7 @@ int main() {
                 cout << "Correct!" << endl;
                 cout << "You're a real Math Whizz!" << endl;
                 break;
-            } else {
-                if (totalIncorrect == MAX_ATTEMPTS) {
+            } else if (i == MAX_ATTEMPTS) {
                     cout << "Oops!" << endl;
                     cout << "Looks like someone needs to study." << endl;
                     cout << "The correct answer was " << correctAnswer << "." << endl; //gives the user the right answer
@@ -184,7 +183,7 @@ int main() {
                     cout << "That was incorrect. You have " << MAX_ATTEMPTS-totalIncorrect << " attempts." << endl;
                 }
 
-            }
+
         }
 
         if (totalCorrect == 3) {

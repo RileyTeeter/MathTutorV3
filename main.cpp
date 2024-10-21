@@ -151,7 +151,8 @@ int main() {
 
         //*********************************************************************
 
-        for (int i =1; i <= MAX_ATTEMPTS; i++) {
+        for (int i = 1; i <= MAX_ATTEMPTS; i++) {
+            cout << endl;
             cout << "[Level #" << mathLevel << "] " << userName << ", what does "
             << leftNum << " " << mathSymbol << " " << rightNum << " = ";
 
@@ -170,22 +171,24 @@ int main() {
             // Tests to see if user answer is correct
             if (userAnswer == correctAnswer) {
                 totalCorrect++;
-                cout << "Correct!" << endl;
+                cout << "You are correct!" << endl;
                 cout << "You're a real Math Whizz!" << endl;
                 break;
             } else if (i == MAX_ATTEMPTS) {
                     cout << "Oops!" << endl;
                     cout << "Looks like someone needs to study." << endl;
                     cout << "The correct answer was " << correctAnswer << "." << endl; //gives the user the right answer
+                    totalIncorrect++;
                 }
                 else {
                     totalIncorrect++;
-                    cout << "That was incorrect. You have " << MAX_ATTEMPTS-totalIncorrect << " attempts." << endl;
+                    cout << "That was incorrect. You have " << MAX_ATTEMPTS - i << " attempts left." << endl;
                 }
 
 
         }
 
+        // Leveling Up/Down based on attempts
         if (totalCorrect == 3) {
             mathLevel++;
             totalCorrect = 0;
@@ -199,12 +202,13 @@ int main() {
             totalCorrect = 0;
             totalIncorrect = 0;
             currentRange -= LEVEL_RANGE_CHANGE;
-            cout << "You are on " << mathLevel << "!" << endl;
+            cout << "You are on Level " << mathLevel << "!" << endl;
             cout << "Your range is 1 to " << currentRange << endl;
         }
 
         getline(cin, userYN);
 
+        //Asking user if they want to continue
         while (true) {
             cout << "Do you want to continue (y = yes | n = no)?";
             getline(cin, userYN);

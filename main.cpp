@@ -34,8 +34,8 @@ int main() {
     int temp = 0;
     string userYN = "?";
     char mathSymbol = '?';
-    const MAX_ATTEMPTS = 3;
-    const LEVEL_RANGE_CHANGE = 10;
+    const int MAX_ATTEMPTS = 3;
+    const int LEVEL_RANGE_CHANGE = 10;
     int totalCorrect = 0;
     int totalIncorrect = 0;
     int mathLevel = 1;
@@ -154,36 +154,36 @@ int main() {
         for (int i =1; i <= MAX_ATTEMPTS; i++) {
             cout << "[Level #" << mathLevel << "] " << userName << ", what does "
             << leftNum << " " << mathSymbol << " " << rightNum << " = ";
-        }
 
-        // Loop until the user enters numeric data "From the assignment document"
-        while (!(cin >> userAnswer)) {
-            cin.clear(); // clear the cin error flag
-            cin.ignore(numeric_limits<streamsize>::max() ,
-                    '\n'); // ignore the max input, up to 'n'
-            cout << "\tInvalid input!" << endl;
-            cout << "\tPlease enter a number: ";
-        } // end of get userAnswer while loop
 
-        cout << endl; // extra space in between the answer and the confirmation message
+            // Loop until the user enters numeric data "From the assignment document"
+            while (!(cin >> userAnswer)) {
+                cin.clear(); // clear the cin error flag
+                cin.ignore(numeric_limits<streamsize>::max() ,
+                        '\n'); // ignore the max input, up to 'n'
+                cout << "\tInvalid input!" << endl;
+                cout << "\tPlease enter a number: ";
+            } // end of get userAnswer while loop
 
-        // Tests to see if user answer is correct
-        if (userAnswer == correctAnswer) {
-            totalCorrect++;
-            cout << "Correct!" << endl;
-            cout << "You're a real Math Whizz!" << endl;
-            break;
-        } else {
-            if (totalIncorrect == MAX_ATTEMPTS) {
-                cout << "The correct answer was " << correctAnswer << "." << endl; //gives the user the right answer
-                totalIncorrect++;
+            cout << endl; // extra space in between the answer and the confirmation message
+
+            // Tests to see if user answer is correct
+            if (userAnswer == correctAnswer) {
+                totalCorrect++;
+                cout << "Correct!" << endl;
+                cout << "You're a real Math Whizz!" << endl;
+                break;
+            } else {
+                if (totalIncorrect == MAX_ATTEMPTS) {
+                    cout << "Oops!" << endl;
+                    cout << "Looks like someone needs to study." << endl;
+                    cout << "The correct answer was " << correctAnswer << "." << endl; //gives the user the right answer
+                }
+                else {
+                    cout << "That was incorrect. You have " << MAX_ATTEMPTS-totalIncorrect << " attempts." << endl;
+                }
+
             }
-            else {
-                cout << "That was incorrect. You have " << MAX_ATTEMPTS-totalIncorrect << " attempts." << endl;
-            }
-            cout << "Oops!" << endl;
-            cout << "Looks like someone needs to study." << endl; // The AI suggested to put "You're not a real Math Whizz!"
-            cout << "The correct answer was " << correctAnswer << "." << endl; //gives the user the right answer
         }
 
         getline(cin, userYN);
@@ -196,8 +196,7 @@ int main() {
             for (int i = 0; i < userYN.size(); i++) {
                 userYN.at(i) = tolower(userYN.at(i));
             }
-            if (userYN == "y" || userYN == "yes" || userYN == "ny"
-                                                              "o" || userYN == "n") {
+            if (userYN == "y" || userYN == "yes" || userYN == "no" || userYN == "n") {
                 break;
             }else {
                 cout << "Invalid input, please try again..." << endl;

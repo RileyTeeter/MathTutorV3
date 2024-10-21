@@ -180,10 +180,28 @@ int main() {
                     cout << "The correct answer was " << correctAnswer << "." << endl; //gives the user the right answer
                 }
                 else {
+                    totalIncorrect++;
                     cout << "That was incorrect. You have " << MAX_ATTEMPTS-totalIncorrect << " attempts." << endl;
                 }
 
             }
+        }
+
+        if (totalCorrect == 3) {
+            mathLevel++;
+            totalCorrect = 0;
+            totalIncorrect = 0;
+            currentRange += LEVEL_RANGE_CHANGE;
+            cout << "You are on Level " << mathLevel << "!" << endl;
+            cout << "Your new range is 1 to " << currentRange << endl;
+        }
+        else if (totalIncorrect == 3 && mathLevel > 1) {
+            mathLevel--;
+            totalCorrect = 0;
+            totalIncorrect = 0;
+            currentRange -= LEVEL_RANGE_CHANGE;
+            cout << "You are on " << mathLevel << "!" << endl;
+            cout << "Your range is 1 to " << currentRange << endl;
         }
 
         getline(cin, userYN);

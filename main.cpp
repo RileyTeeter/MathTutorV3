@@ -174,6 +174,7 @@ int main() {
                 totalCorrect++;
                 cout << "Correct!" << endl;
                 cout << "You're a real Math Whizz!" << endl;
+                cout << endl;
                 break;
             } else if (i == MAX_ATTEMPTS) {
                     cout << "Oops!" << endl;
@@ -194,6 +195,7 @@ int main() {
             currentRange += LEVEL_RANGE_CHANGE; //Adds 10 to current range
             cout << "You are now on Level " << mathLevel << "!" << endl;
             cout << "New range is 1 to " << currentRange << endl;
+            cout << endl;
         }
         else if (totalIncorrect >= 3 && mathLevel > 1) { //Levels down after 3 wrong attempts. Will not level down on first level
             mathLevel--;
@@ -202,6 +204,7 @@ int main() {
             currentRange -= LEVEL_RANGE_CHANGE; //Subtracts 10 from current range
             cout << "You are now on Level " << mathLevel << "!" << endl;
             cout << "New range is 1 to " << currentRange << endl;
+            cout << endl;
         }
 
         getline(cin, userYN);

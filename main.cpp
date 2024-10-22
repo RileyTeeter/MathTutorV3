@@ -2,7 +2,7 @@
 /**************************************************************************************
 Program: Math Tutor Version 3
 Programmers: Riley Teeter & River Wallerstedt
-Date: 10/21/24 *Last updated version
+Date: 10/22/24 *Last updated version
 Github URL: https://github.com/RileyTeeter/MathTutorV3
 Description: A simple math tutor for elementary students. Version 3 gets the user's name
 and asks the user to answer a randomized math question. This version will repeat the question
@@ -100,7 +100,8 @@ int main() {
     cout << endl;
 
     //*********************************************************************
-    do {
+
+    do { //Beginning of central loop that repeats number generation and math problems
 
         //Portion of code dedicated to random number generation
         leftNum = (rand() % currentRange) + 1; //randomizes first number
@@ -110,7 +111,7 @@ int main() {
         enum mthType {MT_ADD, MT_SUB, MT_MUL, MT_DIV};
         mthType questionType;
 
-        questionType = static_cast<mthType>(rand() % 4);
+        questionType = static_cast<mthType>(rand() % 4); //Randomizes question type
 
         switch (questionType) {
             // assigns math symbol
@@ -151,7 +152,7 @@ int main() {
 
         //*********************************************************************
 
-        for (int i = 1; i <= MAX_ATTEMPTS; i++) {
+        for (int i = 1; i <= MAX_ATTEMPTS; i++) { //Loops until user gets answer correct or until 3 wrong attempts
             cout << endl;
             cout << "[Level #" << mathLevel << "] " << userName << ", what does "
             << leftNum << " " << mathSymbol << " " << rightNum << " = ";
@@ -171,7 +172,7 @@ int main() {
             // Tests to see if user answer is correct
             if (userAnswer == correctAnswer) {
                 totalCorrect++;
-                cout << "You are correct!" << endl;
+                cout << "Correct!" << endl;
                 cout << "You're a real Math Whizz!" << endl;
                 break;
             } else if (i == MAX_ATTEMPTS) {
@@ -180,30 +181,27 @@ int main() {
                     cout << "The correct answer was " << correctAnswer << "." << endl; //gives the user the right answer
                     totalIncorrect++;
                 }
-                else {
-                    totalIncorrect++;
+                else { //Else runs until user is out of attempts or until user gets the question correct
                     cout << "That was incorrect. You have " << MAX_ATTEMPTS - i << " attempts left." << endl;
                 }
-
-
         }
 
         // Leveling Up/Down based on attempts
-        if (totalCorrect == 3) {
+        if (totalCorrect == 3) { //Levels up if correct answers = 3
             mathLevel++;
-            totalCorrect = 0;
+            totalCorrect = 0; //Resets totalCorrect and totalIncorrect
             totalIncorrect = 0;
-            currentRange += LEVEL_RANGE_CHANGE;
-            cout << "You are on Level " << mathLevel << "!" << endl;
-            cout << "Your new range is 1 to " << currentRange << endl;
+            currentRange += LEVEL_RANGE_CHANGE; //Adds 10 to current range
+            cout << "You are now on Level " << mathLevel << "!" << endl;
+            cout << "New range is 1 to " << currentRange << endl;
         }
-        else if (totalIncorrect == 3 && mathLevel > 1) {
+        else if (totalIncorrect >= 3 && mathLevel > 1) { //Levels down after 3 wrong attempts. Will not level down on first level
             mathLevel--;
             totalCorrect = 0;
             totalIncorrect = 0;
-            currentRange -= LEVEL_RANGE_CHANGE;
-            cout << "You are on Level " << mathLevel << "!" << endl;
-            cout << "Your range is 1 to " << currentRange << endl;
+            currentRange -= LEVEL_RANGE_CHANGE; //Subtracts 10 from current range
+            cout << "You are now on Level " << mathLevel << "!" << endl;
+            cout << "New range is 1 to " << currentRange << endl;
         }
 
         getline(cin, userYN);
@@ -227,7 +225,7 @@ int main() {
 
     }
 
-    while (userYN == "y" || userYN == "yes");
+    while (userYN == "y" || userYN == "yes"); //Loop goes until userYN no longer equals "yes"
 
     // End of program. Leave message to user. Couts break up the end message to display better in console.
     cout << endl;

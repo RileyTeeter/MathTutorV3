@@ -25,21 +25,29 @@ int main() {
     //*********************************************************************
 
     // Declares and initializes variables
-    string userName = "unknown"; // Declaring and initializing variables
+
+    //Constants
+    const int MAX_ATTEMPTS = 3; //Sets how many attempts per question
+    const int LEVEL_RANGE_CHANGE = 10; //Sets how much the range changes per level
+
+    //Integers
     int leftNum = 0;
     int rightNum = 0;
     int mathType = 0;
     int correctAnswer = 0;
     int userAnswer = 0;
     int temp = 0;
+    int totalCorrect = 0; //Counter for correct answers
+    int totalIncorrect = 0; //Counter for incorrect answers
+    int mathLevel = 1; //Starts user on level 1
+    int currentRange = LEVEL_RANGE_CHANGE; //Sets starting range at 10
+
+    //Strings
     string userYN = "?";
+    string userName = "unknown";
+
+    //Chars
     char mathSymbol = '?';
-    const int MAX_ATTEMPTS = 3;
-    const int LEVEL_RANGE_CHANGE = 10;
-    int totalCorrect = 0;
-    int totalIncorrect = 0;
-    int mathLevel = 1;
-    int currentRange = LEVEL_RANGE_CHANGE;
 
     srand(time(0)); // Generates a unique seed so its random.
 
@@ -68,7 +76,8 @@ int main() {
     if (userYN == "y") {
         //response to 'y' as input
         cout << "Great! Here they are:" << endl;
-    } else {
+    }
+    else {
         cout << "That's too bad." << endl;
         cout << "You're gonna hear them anyway!" << endl;
     }
@@ -145,8 +154,8 @@ int main() {
 
             default: // This is here to catch any errors
                 cout << "Invalid question type: " << mathType << endl;
-            cout << "Contact RivJams or RileyTeeter about the error" << endl;
-            cout << "Program ended with a -1 error" << endl;
+                cout << "Contact RivJams or RileyTeeter about the error" << endl;
+                cout << "Program ended with a -1 error" << endl;
             return -1;
         }
 
@@ -170,21 +179,23 @@ int main() {
             cout << endl; // extra space in between the answer and the confirmation message
 
             // Tests to see if user answer is correct
-            if (userAnswer == correctAnswer) {
+            if (userAnswer == correctAnswer) { //Displays when correct
                 totalCorrect++;
                 cout << "Correct!" << endl;
                 cout << "You're a real Math Whizz!" << endl;
                 cout << endl;
                 break;
-            } else if (i == MAX_ATTEMPTS) {
+            }
+            else if (i == MAX_ATTEMPTS) { //Displays when incorrect
                     cout << "Oops!" << endl;
                     cout << "Looks like someone needs to study." << endl;
                     cout << "The correct answer was " << correctAnswer << "." << endl; //gives the user the right answer
                     totalIncorrect++;
-                }
-                else { //Else runs until user is out of attempts or until user gets the question correct
+                    cout << endl;
+            }
+            else { //Else runs until user is out of attempts or until user gets the question correct
                     cout << "That was incorrect. You have " << MAX_ATTEMPTS - i << " attempts left." << endl;
-                }
+            }
         }
 
         // Leveling Up/Down based on attempts
